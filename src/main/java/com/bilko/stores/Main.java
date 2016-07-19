@@ -10,17 +10,20 @@ import java.util.logging.Logger;
 
 public class Main {
 
-    private static final Logger LOG = Logger.getLogger("com.bilko.stores.Main");
+    private static final Logger LOG = Logger.getLogger(Main.class.getSimpleName());
 
     public static void main(final String[] args) {
         final ScheduledExecutorService executor = Executors.newScheduledThreadPool(Constants.STORES_NUMBER);
         try {
-            executor.execute(() -> System.out.println(new GroceryFactory().getStore()));
-            executor.schedule(() ->
-                System.out.println(new PharmacyFactory().getStore()), Constants.THREAD_STARTING_DELAY, TimeUnit.SECONDS);
+            executor.execute(() -> open(new GroceryFactory().getStore()));
+            executor.schedule(() -> open(new PharmacyFactory().getStore()), Constants.START_DELAY, TimeUnit.SECONDS);
         } finally {
-            shutdown(executor, Constants.EXECUTOR_SERVICE_SHUTDOWN_TIMEOUT);
+            shutdown(executor, Constants.SHUTDOWN_TIMEOUT);
         }
+    }
+
+    private static void open(final Store store) {
+        System.out.println(store.getCategories());
     }
 
     private static List<Runnable> shutdown(final ExecutorService executor, final int timeout) {

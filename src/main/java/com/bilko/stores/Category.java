@@ -2,15 +2,9 @@ package com.bilko.stores;
 
 import java.util.List;
 
-class Category {
+interface Category {
 
-    private List<Product> products;
+    String getType();
 
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(final List<Product> products) {
-        this.products = products;
-    }
+    List<Product> getProducts();
 }

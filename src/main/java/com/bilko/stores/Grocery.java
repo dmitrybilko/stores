@@ -1,10 +1,14 @@
 package com.bilko.stores;
 
-class Grocery extends Store {
+import java.util.Arrays;
+
+class Grocery extends AbstractStore {
 
     private static Grocery instance;
 
-    private Grocery() {}
+    private Grocery() {
+        super(Arrays.asList(new Fruits(), new Vegetables()));
+    }
 
     static synchronized Grocery getInstance() {
         if (instance == null) {

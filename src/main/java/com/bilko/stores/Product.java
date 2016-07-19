@@ -1,8 +1,8 @@
 package com.bilko.stores;
 
-class Product {
+interface Product {
 
-    private enum Status {
+    enum Status {
 
         AVAILABLE("Available"),
         ABSENT("Absent"),
@@ -20,31 +20,9 @@ class Product {
         }
     }
 
-    private String title;
-    private float price;
-    private String status;
+    String getTitle();
 
-    public String getTitle() {
-        return title;
-    }
+    float getPrice();
 
-    public void setTitle(final String title) {
-        this.title = title;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(final float price) {
-        this.price = price;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(final Status status) {
-        this.status = status.toString();
-    }
+    String getStatus();
 }

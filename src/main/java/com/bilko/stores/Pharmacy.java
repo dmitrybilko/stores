@@ -1,10 +1,14 @@
 package com.bilko.stores;
 
-class Pharmacy extends Store {
+import java.util.Arrays;
+
+class Pharmacy extends AbstractStore {
 
     private static Pharmacy instance;
 
-    private Pharmacy() {}
+    private Pharmacy() {
+        super(Arrays.asList(new Antipyretics(), new Painkillers()));
+    }
 
     static synchronized Pharmacy getInstance() {
         if (instance == null) {

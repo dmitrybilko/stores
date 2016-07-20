@@ -1,3 +1,8 @@
 package com.bilko.stores;
 
-public class Pepper extends AbstractProduct {}
+class Pepper extends AbstractProduct {
+
+    Pepper() {
+        super(Pepper.class.getSimpleName(), 60f, Status.AVAILABLE);
+    }
+}

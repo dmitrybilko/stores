@@ -1,3 +1,8 @@
 package com.bilko.stores;
 
-public class Tomato extends AbstractProduct {}
+class Tomato extends AbstractProduct {
+
+    Tomato() {
+        super(Tomato.class.getSimpleName(), 30.95f, Status.AVAILABLE);
+    }
+}

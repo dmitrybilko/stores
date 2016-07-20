@@ -1,3 +1,8 @@
 package com.bilko.stores;
 
-public class Cucumber extends AbstractProduct {}
+class Cucumber extends AbstractProduct {
+
+    Cucumber() {
+        super(Cucumber.class.getSimpleName(), 17f, Status.AVAILABLE);
+    }
+}

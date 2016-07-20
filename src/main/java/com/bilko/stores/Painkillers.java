@@ -1,9 +1,10 @@
 package com.bilko.stores;
 
+import java.util.Arrays;
+
 class Painkillers extends AbstractCategory {
 
-    @Override
-    public String getType() {
-        return Pharmacy.class.getSimpleName();
+    Painkillers() {
+        super(Arrays.asList(new Vicodin(), new Morphine(), new Ketamine()));
     }
 }

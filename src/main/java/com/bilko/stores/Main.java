@@ -23,7 +23,18 @@ public class Main {
     }
 
     private static void open(final Store store) {
-        System.out.println(store.getCategories());
+        changeStatus(store.getCategories());
+    }
+
+    private static void changeStatus(final List<Category> categories) {
+        for (final Product product : categories.get(0).getProducts()) {
+            product.setStatus(Product.Status.ABSENT);
+        }
+        for (final Category category : categories.subList(1, categories.size())) {
+            for (final Product product : category.getProducts().subList(0, category.getProducts().size() / 2)) {
+                product.setStatus(Product.Status.EXPECTED);
+            }
+        }
     }
 
     private static List<Runnable> shutdown(final ExecutorService executor, final int timeout) {

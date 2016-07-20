@@ -1,9 +1,10 @@
 package com.bilko.stores;
 
+import java.util.Arrays;
+
 class Vegetables extends AbstractCategory {
 
-    @Override
-    public String getType() {
-        return Grocery.class.getSimpleName();
+    Vegetables() {
+        super(Arrays.asList(new Tomato(), new Cucumber(), new Pepper()));
     }
 }

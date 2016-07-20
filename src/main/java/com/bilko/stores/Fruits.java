@@ -1,9 +1,10 @@
 package com.bilko.stores;
 
+import java.util.Arrays;
+
 class Fruits extends AbstractCategory {
 
-    @Override
-    public String getType() {
-        return Grocery.class.getSimpleName();
+    Fruits() {
+        super(Arrays.asList(new Banana(), new Apple(), new Pear()));
     }
 }

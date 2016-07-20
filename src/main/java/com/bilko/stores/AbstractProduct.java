@@ -6,6 +6,12 @@ abstract class AbstractProduct implements Product {
     private float price;
     private String status;
 
+    AbstractProduct(final String title, final float price, final Status status) {
+        this.title = title;
+        this.price = price;
+        this.status = status.toString();
+    }
+
     @Override
     public String getTitle() {
         return title;
@@ -19,5 +25,10 @@ abstract class AbstractProduct implements Product {
     @Override
     public String getStatus() {
         return status;
+    }
+
+    @Override
+    public void setStatus(final Status status) {
+        this.status = status.toString();
     }
 }

@@ -24,17 +24,48 @@ public class Main {
 
     private static void open(final Store store) {
         changeStatus(store.getCategories());
+        changePrice(store.getCategories());
     }
 
     private static void changeStatus(final List<Category> categories) {
-        for (final Product product : categories.get(0).getProducts()) {
-            product.setStatus(Product.Status.ABSENT);
-        }
-        for (final Category category : categories.subList(1, categories.size())) {
-            for (final Product product : category.getProducts().subList(0, category.getProducts().size() / 2)) {
-                product.setStatus(Product.Status.EXPECTED);
-            }
-        }
+        categories.get(0).getProducts()
+            .stream()
+            .forEach(product -> {
+                product.setStatus(Product.Status.ABSENT);
+                System.out.println(product.getTitle() + ": " + product.getStatus());
+            });
+
+        categories.subList(1, categories.size())
+            .stream()
+            .forEach(category -> {
+                category
+                    .getProducts().subList(0, category.getProducts().size() / 2)
+                    .stream()
+                    .forEach(product -> {
+                        product.setStatus(Product.Status.EXPECTED);
+                        System.out.println(product.getTitle() + ": " + product.getStatus());
+                    });
+                category
+                    .getProducts()
+                    .stream()
+                    .filter(product -> product.getStatus().equals(Product.Status.AVAILABLE.toString()))
+                    .forEach(product -> System.out.println(product.getTitle() + ": " + product.getStatus()));
+            });
+    }
+
+    private static void changePrice(final List<Category> categories) {
+        categories
+            .stream()
+            .forEach(category -> category
+                .getProducts()
+                .stream()
+                .filter(product -> product.getStatus().equals(Product.Status.AVAILABLE.toString()))
+                .forEach(product -> {
+                    System.out.println(product.getTitle() + ": " + product.getPrice());
+                    product.setPrice(product.getPrice() * 1.2f);
+                    System.out.println(product.getTitle() + ": " + product.getPrice());
+                })
+            );
     }
 
     private static List<Runnable> shutdown(final ExecutorService executor, final int timeout) {

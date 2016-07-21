@@ -24,6 +24,8 @@ interface Product {
 
     float getPrice();
 
+    void setPrice(final float price);
+
     String getStatus();
 
     void setStatus(final Status status);

@@ -23,6 +23,11 @@ abstract class AbstractProduct implements Product {
     }
 
     @Override
+    public void setPrice(final float price) {
+        this.price = price;
+    }
+
+    @Override
     public String getStatus() {
         return status;
     }

@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface Store {
 
+    String getId();
+
     String getTitle();
 
     List<Category> getCategories();

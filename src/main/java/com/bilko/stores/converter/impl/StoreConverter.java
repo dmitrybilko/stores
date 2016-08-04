@@ -16,6 +16,7 @@ public class StoreConverter extends AbstractConverter<Store> {
     @Override
     public Document toDocument(final Store store) {
         return new Document()
+            .append("_id", store.getId())
             .append("title", store.getTitle())
             .append("categories", categoryConverter.toDocuments(store.getCategories()));
     }

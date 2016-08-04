@@ -3,11 +3,13 @@ package com.bilko.stores.model;
 public abstract class AbstractProduct implements Product {
 
     private String title;
+    private String type;
     private float price;
     private String status;
 
-    public AbstractProduct(final String title, final float price, final Status status) {
+    public AbstractProduct(final String title, final String type, final float price, final Status status) {
         this.title = title;
+        this.type = type;
         this.price = price;
         this.status = status.toString();
     }
@@ -15,6 +17,11 @@ public abstract class AbstractProduct implements Product {
     @Override
     public String getTitle() {
         return title;
+    }
+
+    @Override
+    public String getType() {
+        return type;
     }
 
     @Override

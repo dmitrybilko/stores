@@ -5,6 +5,6 @@ import com.bilko.stores.model.AbstractProduct;
 public class Apple extends AbstractProduct {
 
     public Apple() {
-        super(Apple.class.getSimpleName(), 17f, Status.AVAILABLE);
+        super(Apple.class.getSimpleName(), Fruits.class.getSimpleName(), 17f, Status.AVAILABLE);
     }
 }

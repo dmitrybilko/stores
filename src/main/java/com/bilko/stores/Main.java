@@ -1,5 +1,6 @@
 package com.bilko.stores;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -10,19 +11,23 @@ import java.util.logging.Logger;
 
 import com.bilko.stores.dao.StoreDAO;
 import com.bilko.stores.db.MongoHandler;
-import com.bilko.stores.factory.GroceryFactory;
-import com.bilko.stores.factory.PharmacyFactory;
+import com.bilko.stores.factory.impl.GroceryFactory;
+import com.bilko.stores.factory.impl.PharmacyFactory;
 import com.bilko.stores.model.Category;
 import com.bilko.stores.model.Product;
 import com.bilko.stores.model.Store;
+import com.bilko.stores.model.impl.*;
 import com.bilko.stores.util.Constants;
 
 public class Main {
 
     private static final Logger LOG = Logger.getLogger(Main.class.getSimpleName());
 
+    private static final Product[] products = {new Apple(), new Aspirin(), new Banana(), new Cucumber(), new Ibuprofen(),
+        new Ketamine(), new Morphine(), new Paracetamol(), new Pear(), new Pepper(), new Tomato(), new Vicodin()};
+
     public static void main(final String[] args) {
-        MongoHandler.drop(Constants.MONGO_DB_COLLECTION);
+        MongoHandler.drop();
         final ScheduledExecutorService executor = Executors.newScheduledThreadPool(Constants.STORES_NUMBER);
         try {
             executor.execute(() -> open(new GroceryFactory().getStore()));
@@ -34,9 +39,7 @@ public class Main {
     }
 
     private static void open(final Store store) {
-        new StoreDAO().create(store);
-//        changeStatus(store.getCategories());
-//        changePrice(store.getCategories());
+        StoreDAO.get().addProducts(store, Arrays.asList(products));
     }
 
     private static void changeStatus(final List<Category> categories) {
@@ -65,10 +68,6 @@ public class Main {
     }
 
     private static List<Runnable> shutdown(final ExecutorService executor, final int timeout) {
-        if (executor == null) {
-            LOG.info("EXECUTOR IS NULL");
-            return null;
-        }
         executor.shutdown();
         if (timeout > 0) {
             try {
@@ -77,7 +76,7 @@ public class Main {
                 LOG.log(Level.WARNING, "WAITING FOR EXECUTOR SERVICE TASKS COMPLETION INTERRUPTED", e);
             }
         }
-        MongoHandler.reveal(Constants.MONGO_DB_COLLECTION);
+        MongoHandler.reveal();
         return (executor.isTerminated() ? null : executor.shutdownNow());
     }
 

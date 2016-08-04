@@ -20,16 +20,16 @@ public class MongoHandler {
         return database;
     }
 
-    public static MongoCollection<Document> getCollection(final String name) {
-        return connect().getCollection(name);
+    public static MongoCollection<Document> getCollection() {
+        return connect().getCollection(Constants.MONGO_DB_COLLECTION);
     }
 
-    public static void drop(final String collection) {
-        getCollection(collection).drop();
+    public static void drop() {
+        getCollection().drop();
     }
 
-    public static void reveal(final String collection) {
-        getCollection(collection)
+    public static void reveal() {
+        getCollection()
             .find()
             .forEach((Block<Document>) System.out::println);
     }

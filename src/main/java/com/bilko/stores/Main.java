@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.bilko.stores.dao.StoreDAO;
+import com.bilko.stores.dao.StoreDao;
 import com.bilko.stores.db.MongoHandler;
 import com.bilko.stores.factory.impl.GroceryFactory;
 import com.bilko.stores.factory.impl.PharmacyFactory;
@@ -39,7 +39,7 @@ public class Main {
     }
 
     private static void open(final Store store) {
-        StoreDAO.get().addProducts(store, Arrays.asList(products));
+        StoreDao.get().addProducts(store, Arrays.asList(products));
     }
 
     private static void changeStatus(final List<Category> categories) {

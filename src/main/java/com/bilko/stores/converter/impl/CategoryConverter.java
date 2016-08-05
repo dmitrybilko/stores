@@ -15,8 +15,13 @@ public class CategoryConverter extends AbstractConverter<Category> {
 
     @Override
     public Document toDocument(final Category category) {
-        return new Document()
+        return new Document("category", new Document()
             .append("title", category.getTitle())
-            .append("products", productConverter.toDocuments(category.getProducts()));
+            .append("products", productConverter.toDocuments(category.getProducts())));
+    }
+
+    @Override
+    public Category toModel(final Document document) {
+        return null;
     }
 }

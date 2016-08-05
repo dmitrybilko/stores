@@ -20,4 +20,9 @@ public class StoreConverter extends AbstractConverter<Store> {
             .append("title", store.getTitle())
             .append("categories", categoryConverter.toDocuments(store.getCategories()));
     }
+
+    @Override
+    public Store toModel(final Document document) {
+        return null;
+    }
 }

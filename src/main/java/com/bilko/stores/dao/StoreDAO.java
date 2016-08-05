@@ -11,32 +11,26 @@ import com.bilko.stores.db.MongoHandler;
 import com.bilko.stores.model.Product;
 import com.bilko.stores.model.Store;
 
-public class StoreDAO {
+public class StoreDao {
 
-    private static StoreDAO instance;
+    private static StoreDao instance;
     private MongoCollection<Document> collection;
     private StoreConverter converter;
 
-    private StoreDAO() {
+    private StoreDao() {
         converter = new StoreConverter();
         collection = MongoHandler.getCollection();
     }
 
-    public static synchronized StoreDAO get() {
+    public static synchronized StoreDao get() {
         if (instance == null) {
-            instance = new StoreDAO();
+            instance = new StoreDao();
         }
         return instance;
     }
 
     public void create(final Store store) {
         collection.insertOne(converter.toDocument(store));
-    }
-
-    public void addProducts(final Store store, final List<Product> products) {
-        products
-            .stream()
-            .forEach(product -> addProduct(store, product));
     }
 
     public void addProduct(final Store store, final Product product) {
@@ -46,5 +40,11 @@ public class StoreDAO {
             .filter(category -> category.getTitle().equals(product.getType()))
             .forEach(category -> category.getProducts().add(product));
         collection.replaceOne(new Document("_id", store.getId()), converter.toDocument(store));
+    }
+
+    public void addProducts(final Store store, final List<Product> products) {
+        products
+            .stream()
+            .forEach(product -> addProduct(store, product));
     }
 }

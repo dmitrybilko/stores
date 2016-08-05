@@ -6,7 +6,9 @@ import org.bson.Document;
 
 public interface Converter<T> {
 
-    Document toDocument(final T model);
+    Document toDocument(T model);
 
-    List<Document> toDocuments(final List<T> models);
+    List<Document> toDocuments(List<T> models);
+
+    T toModel(Document document);
 }

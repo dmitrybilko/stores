@@ -2,7 +2,7 @@ package com.bilko.stores.model;
 
 import java.util.List;
 
-import com.bilko.stores.dao.StoreDAO;
+import com.bilko.stores.dao.StoreDao;
 
 public abstract class AbstractStore implements Store {
 
@@ -18,7 +18,7 @@ public abstract class AbstractStore implements Store {
     }
 
     private void create() {
-        StoreDAO.get().create(this);
+        StoreDao.get().create(this);
     }
 
     @Override

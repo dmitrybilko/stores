@@ -9,9 +9,14 @@ public class ProductConverter extends AbstractConverter<Product> {
 
     @Override
     public Document toDocument(final Product product) {
-        return new Document()
+        return new Document("product", new Document()
             .append("title", product.getTitle())
             .append("price", product.getPrice())
-            .append("status", product.getStatus());
+            .append("status", product.getStatus()));
+    }
+
+    @Override
+    public Product toModel(final Document document) {
+        return null;
     }
 }

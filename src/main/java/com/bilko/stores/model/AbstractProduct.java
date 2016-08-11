@@ -4,10 +4,10 @@ public abstract class AbstractProduct implements Product {
 
     private String title;
     private String type;
-    private float price;
+    private String price;
     private String status;
 
-    public AbstractProduct(final String title, final String type, final float price, final Status status) {
+    public AbstractProduct(final String title, final String type, final String price, final Status status) {
         this.title = title;
         this.type = type;
         this.price = price;
@@ -25,12 +25,12 @@ public abstract class AbstractProduct implements Product {
     }
 
     @Override
-    public float getPrice() {
+    public String getPrice() {
         return price;
     }
 
     @Override
-    public void setPrice(final float price) {
+    public void setPrice(final String price) {
         this.price = price;
     }
 

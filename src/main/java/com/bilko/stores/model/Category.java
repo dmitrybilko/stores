@@ -7,4 +7,6 @@ public interface Category {
     String getTitle();
 
     List<Product> getProducts();
+
+    void setProducts(List<Product> products);
 }

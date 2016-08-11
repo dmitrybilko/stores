@@ -24,9 +24,9 @@ public interface Product {
 
     String getType();
 
-    float getPrice();
+    String getPrice();
 
-    void setPrice(final float price);
+    void setPrice(final String price);
 
     String getStatus();
 

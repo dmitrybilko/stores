@@ -11,4 +11,6 @@ public interface Converter<T> {
     List<Document> toDocuments(List<T> models);
 
     T toModel(Document document);
+
+    List<T> toModels(List<Document> documents);
 }

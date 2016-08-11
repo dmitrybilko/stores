@@ -21,4 +21,9 @@ public abstract class AbstractCategory implements Category {
     public List<Product> getProducts() {
         return products;
     }
+
+    @Override
+    public void setProducts(final List<Product> products) {
+        this.products = products;
+    }
 }

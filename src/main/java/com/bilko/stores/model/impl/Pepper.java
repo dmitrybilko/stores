@@ -4,7 +4,9 @@ import com.bilko.stores.model.AbstractProduct;
 
 public class Pepper extends AbstractProduct {
 
+    public static final String TAG = Pepper.class.getSimpleName();
+
     public Pepper() {
-        super(Pepper.class.getSimpleName(), Vegetables.class.getSimpleName(), 60f, Status.AVAILABLE);
+        super(TAG, Vegetables.class.getSimpleName(), "60", Status.AVAILABLE);
     }
 }

@@ -4,7 +4,9 @@ import com.bilko.stores.model.AbstractProduct;
 
 public class Ketamine extends AbstractProduct {
 
+    public static final String TAG = Ketamine.class.getSimpleName();
+
     public Ketamine() {
-        super(Ketamine.class.getSimpleName(), Painkillers.class.getSimpleName(), 372.9f, Status.AVAILABLE);
+        super(TAG, Painkillers.class.getSimpleName(), "372.9", Status.AVAILABLE);
     }
 }

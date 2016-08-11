@@ -4,7 +4,9 @@ import com.bilko.stores.model.AbstractProduct;
 
 public class Tomato extends AbstractProduct {
 
+    public static final String TAG = Tomato.class.getSimpleName();
+
     public Tomato() {
-        super(Tomato.class.getSimpleName(), Vegetables.class.getSimpleName(), 30.95f, Status.AVAILABLE);
+        super(TAG, Vegetables.class.getSimpleName(), "30.95", Status.AVAILABLE);
     }
 }

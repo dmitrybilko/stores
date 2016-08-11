@@ -2,8 +2,6 @@ package com.bilko.stores.model;
 
 import java.util.List;
 
-import com.bilko.stores.dao.StoreDao;
-
 public abstract class AbstractStore implements Store {
 
     private String id;
@@ -14,11 +12,6 @@ public abstract class AbstractStore implements Store {
         this.id = id;
         this.title = title;
         this.categories = categories;
-        create();
-    }
-
-    private void create() {
-        StoreDao.get().create(this);
     }
 
     @Override
@@ -34,5 +27,10 @@ public abstract class AbstractStore implements Store {
     @Override
     public List<Category> getCategories() {
         return categories;
+    }
+
+    @Override
+    public void setCategories(final List<Category> categories) {
+        this.categories = categories;
     }
 }

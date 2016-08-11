@@ -4,7 +4,9 @@ import com.bilko.stores.model.AbstractProduct;
 
 public class Paracetamol extends AbstractProduct {
 
+    public static final String TAG = Paracetamol.class.getSimpleName();
+
     public Paracetamol() {
-        super(Paracetamol.class.getSimpleName(), Antipyretics.class.getSimpleName(), 8.19f, Status.AVAILABLE);
+        super(TAG, Antipyretics.class.getSimpleName(), "8.19", Status.AVAILABLE);
     }
 }

@@ -4,7 +4,9 @@ import com.bilko.stores.model.AbstractCategory;
 
 public class Vegetables extends AbstractCategory {
 
+    public static final String TAG = Vegetables.class.getSimpleName();
+
     public Vegetables() {
-        super(Vegetables.class.getSimpleName());
+        super(TAG);
     }
 }

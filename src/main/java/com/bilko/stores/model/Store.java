@@ -9,4 +9,6 @@ public interface Store {
     String getTitle();
 
     List<Category> getCategories();
+
+    void setCategories(List<Category> categories);
 }

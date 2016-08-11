@@ -8,10 +8,12 @@ import com.bilko.stores.model.AbstractStore;
 
 public class Pharmacy extends AbstractStore {
 
+    public static final String TAG = Pharmacy.class.getSimpleName();
+
     private static Pharmacy instance;
 
     private Pharmacy() {
-        super(ObjectId.get().toString(), Pharmacy.class.getSimpleName(), Arrays.asList(new Antipyretics(), new Painkillers()));
+        super(ObjectId.get().toString(), TAG, Arrays.asList(new Antipyretics(), new Painkillers()));
     }
 
     public static synchronized Pharmacy get() {

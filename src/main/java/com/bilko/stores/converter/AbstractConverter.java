@@ -14,4 +14,12 @@ public abstract class AbstractConverter<T> implements Converter<T> {
             .map(this::toDocument)
             .collect(Collectors.toList());
     }
+
+    @Override
+    public List<T> toModels(final List<Document> documents) {
+        return documents
+            .stream()
+            .map(this::toModel)
+            .collect(Collectors.toList());
+    }
 }

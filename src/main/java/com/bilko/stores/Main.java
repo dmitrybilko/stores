@@ -12,7 +12,8 @@ import com.bilko.stores.dao.StoreDao;
 import com.bilko.stores.db.MongoHandler;
 import com.bilko.stores.factory.impl.StoreFactoryManager;
 import com.bilko.stores.model.Store;
-import com.bilko.stores.model.impl.*;
+import com.bilko.stores.model.impl.Grocery;
+import com.bilko.stores.model.impl.Pharmacy;
 import com.bilko.stores.util.Constants;
 
 public class Main {

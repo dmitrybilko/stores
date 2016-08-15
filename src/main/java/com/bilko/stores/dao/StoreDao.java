@@ -1,5 +1,8 @@
 package com.bilko.stores.dao;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
 import java.util.Arrays;
 
 import com.mongodb.client.MongoCollection;
@@ -13,6 +16,7 @@ import com.bilko.stores.model.Store;
 
 import static com.mongodb.client.model.Filters.eq;
 
+import static com.bilko.stores.util.Constants.CURRENCY_SCALE;
 import static com.bilko.stores.util.Constants.MONGO_DB_ID_FIELD;
 import static com.bilko.stores.util.Constants.PRODUCTS;
 
@@ -81,7 +85,15 @@ public class StoreDao {
                 .getProducts()
                 .stream()
                 .filter(product -> product.getStatus().equals(Product.Status.AVAILABLE.toString()))
-                .forEach(product -> product.setPrice(String.valueOf(Float.valueOf(product.getPrice()) * 1.2f)))
+                .forEach(product -> {
+                    final NumberFormat priceFormat = NumberFormat.getNumberInstance();
+                    priceFormat.setMaximumFractionDigits(CURRENCY_SCALE);
+                    product
+                        .setPrice(priceFormat.format(
+                            new BigDecimal(product.getPrice())
+                                .setScale(CURRENCY_SCALE, RoundingMode.HALF_EVEN)
+                                .multiply(new BigDecimal(Float.toString(1.2f)))));
+                })
             );
         collection.replaceOne(eq(MONGO_DB_ID_FIELD, store.getId()), converter.toDocument(store));
     }

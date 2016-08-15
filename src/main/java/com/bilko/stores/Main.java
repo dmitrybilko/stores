@@ -9,8 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.bilko.stores.dao.StoreDao;
-import com.bilko.stores.db.MongoHandler;
-import com.bilko.stores.factory.impl.StoreFactoryManager;
+import com.bilko.stores.factory.impl.StoreFactory;
 import com.bilko.stores.model.Store;
 import com.bilko.stores.model.impl.Grocery;
 import com.bilko.stores.model.impl.Pharmacy;
@@ -21,13 +20,11 @@ public class Main {
     private static final Logger LOG = Logger.getLogger(Main.class.getSimpleName());
 
     public static void main(final String[] args) {
-        MongoHandler.drop();
-        final Store grocery = StoreFactoryManager.get().getStoreFactory(Grocery.TAG).getStore();
-        final Store pharmacy = StoreFactoryManager.get().getStoreFactory(Pharmacy.TAG).getStore();
+        final StoreFactory factory = new StoreFactory();
         final ScheduledExecutorService executor = Executors.newScheduledThreadPool(Constants.STORES_NUMBER);
         try {
-            executor.execute(() -> open(grocery));
-            executor.schedule(() -> open(pharmacy), Constants.START_DELAY, TimeUnit.SECONDS);
+            executor.execute(() -> open(factory.get(Grocery.TAG)));
+            executor.schedule(() -> open(factory.get(Pharmacy.TAG)), Constants.START_DELAY, TimeUnit.SECONDS);
         } finally {
             shutdown(executor, Constants.SHUTDOWN_TIMEOUT);
             close();
@@ -35,26 +32,11 @@ public class Main {
     }
 
     private static void open(final Store store) {
-        create(store);
-        addProducts(store);
-        changeProductsStatuses(store);
-        changeProductsPrices(store);
-    }
-
-    private static void create(final Store store) {
-        StoreDao.get().create(store);
-    }
-
-    private static void addProducts(final Store store) {
-        StoreDao.get().addProducts(store);
-    }
-
-    private static void changeProductsStatuses(final Store store) {
-        StoreDao.get().changeProductsStatuses(store);
-    }
-
-    private static void changeProductsPrices(final Store store) {
-        StoreDao.get().changeProductsPrices(store);
+        final StoreDao storeDao = new StoreDao(store);
+        storeDao.create();
+        storeDao.addProducts();
+        storeDao.changeProductsStatuses();
+        storeDao.changeProductsPrices();
     }
 
     private static List<Runnable> shutdown(final ExecutorService executor, final int timeout) {
@@ -66,7 +48,6 @@ public class Main {
                 LOG.log(Level.WARNING, "WAITING FOR EXECUTOR SERVICE TASKS COMPLETION INTERRUPTED", e);
             }
         }
-        MongoHandler.reveal();
         return (executor.isTerminated() ? null : executor.shutdownNow());
     }
 

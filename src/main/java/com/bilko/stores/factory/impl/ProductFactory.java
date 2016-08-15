@@ -1,6 +1,8 @@
 package com.bilko.stores.factory.impl;
 
-import com.bilko.stores.factory.BaseFactory;
+import java.util.logging.Logger;
+
+import com.bilko.stores.factory.Factory;
 import com.bilko.stores.model.Product;
 import com.bilko.stores.model.impl.Apple;
 import com.bilko.stores.model.impl.Aspirin;
@@ -15,7 +17,9 @@ import com.bilko.stores.model.impl.Pepper;
 import com.bilko.stores.model.impl.Tomato;
 import com.bilko.stores.model.impl.Vicodin;
 
-public class ProductFactory implements BaseFactory<Product> {
+public class ProductFactory implements Factory<Product> {
+
+    private static final Logger LOG = Logger.getLogger(ProductFactory.class.getSimpleName());
 
     @Override
     public Product get(final String title) {
@@ -44,6 +48,7 @@ public class ProductFactory implements BaseFactory<Product> {
         } else if (title.equals(Vicodin.TAG)) {
             return new Vicodin();
         } else {
+            LOG.warning("INCOMPATIBLE PRODUCT TYPE: " + title);
             return null;
         }
     }

@@ -22,27 +22,21 @@ import static com.bilko.stores.util.Constants.PRODUCTS;
 
 public class StoreDao {
 
-    private static StoreDao instance;
+    private Store store;
     private MongoCollection<Document> collection;
     private StoreConverter converter;
 
-    private StoreDao() {
-        converter = new StoreConverter();
-        collection = MongoHandler.getCollection();
+    public StoreDao(final Store store) {
+        this.store = store;
+        this.converter = new StoreConverter();
+        this.collection = MongoHandler.getCollection();
     }
 
-    public static synchronized StoreDao get() {
-        if (instance == null) {
-            instance = new StoreDao();
-        }
-        return instance;
-    }
-
-    public void create(final Store store) {
+    public void create() {
         collection.insertOne(converter.toDocument(store));
     }
 
-    private void addProduct(final Store store, final Product product) {
+    private void addProduct(final Product product) {
         store
             .getCategories()
             .stream()
@@ -51,14 +45,14 @@ public class StoreDao {
         collection.replaceOne(eq(MONGO_DB_ID_FIELD, store.getId()), converter.toDocument(store));
     }
 
-    public void addProducts(final Store store) {
+    public void addProducts() {
         Arrays
             .asList(PRODUCTS)
             .stream()
-            .forEach(product -> addProduct(store, product));
+            .forEach(this::addProduct);
     }
 
-    public void changeProductsStatuses(final Store store) {
+    public void changeProductsStatuses() {
         store
             .getCategories()
             .get(0)
@@ -77,22 +71,22 @@ public class StoreDao {
         collection.replaceOne(eq(MONGO_DB_ID_FIELD, store.getId()), converter.toDocument(store));
     }
 
-    public void changeProductsPrices(final Store store) {
+    public void changeProductsPrices() {
         store
             .getCategories()
             .stream()
             .forEach(category -> category
                 .getProducts()
                 .stream()
-                .filter(product -> product.getStatus().equals(Product.Status.AVAILABLE.toString()))
+                .filter(product -> product
+                    .getStatus()
+                    .equals(Product.Status.AVAILABLE.toString()))
                 .forEach(product -> {
                     final NumberFormat priceFormat = NumberFormat.getNumberInstance();
                     priceFormat.setMaximumFractionDigits(CURRENCY_SCALE);
-                    product
-                        .setPrice(priceFormat.format(
-                            new BigDecimal(product.getPrice())
-                                .setScale(CURRENCY_SCALE, RoundingMode.HALF_EVEN)
-                                .multiply(new BigDecimal(Float.toString(1.2f)))));
+                    product.setPrice(priceFormat.format(new BigDecimal(product.getPrice())
+                        .setScale(CURRENCY_SCALE, RoundingMode.HALF_EVEN)
+                        .multiply(new BigDecimal(Float.toString(1.2f)))));
                 })
             );
         collection.replaceOne(eq(MONGO_DB_ID_FIELD, store.getId()), converter.toDocument(store));

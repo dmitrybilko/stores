@@ -2,14 +2,14 @@ package com.bilko.stores.factory.impl;
 
 import java.util.logging.Logger;
 
-import com.bilko.stores.factory.BaseFactory;
+import com.bilko.stores.factory.Factory;
 import com.bilko.stores.model.Category;
 import com.bilko.stores.model.impl.Antipyretics;
 import com.bilko.stores.model.impl.Fruits;
 import com.bilko.stores.model.impl.Painkillers;
 import com.bilko.stores.model.impl.Vegetables;
 
-public class CategoryFactory implements BaseFactory<Category> {
+public class CategoryFactory implements Factory<Category> {
 
     private static final Logger LOG = Logger.getLogger(CategoryFactory.class.getSimpleName());
 

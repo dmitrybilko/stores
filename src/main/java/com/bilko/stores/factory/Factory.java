@@ -1,6 +1,6 @@
 package com.bilko.stores.factory;
 
-public interface BaseFactory<T> {
+public interface Factory<T> {
 
     T get(String type);
 }

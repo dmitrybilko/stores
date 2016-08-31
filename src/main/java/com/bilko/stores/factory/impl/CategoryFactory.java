@@ -2,18 +2,29 @@ package com.bilko.stores.factory.impl;
 
 import java.util.logging.Logger;
 
-import com.bilko.stores.factory.Factory;
+import com.bilko.stores.factory.ModelFactory;
 import com.bilko.stores.model.Category;
 import com.bilko.stores.model.impl.Antipyretics;
 import com.bilko.stores.model.impl.Fruits;
 import com.bilko.stores.model.impl.Painkillers;
 import com.bilko.stores.model.impl.Vegetables;
 
-public class CategoryFactory implements Factory<Category> {
+/**
+ * {@code ModelFactory} implementation is used to return {@link Category} instance.
+ *
+ * @author Dmitry Bilko
+ * @see Category
+ * @since 1.0
+ */
+public class CategoryFactory implements ModelFactory<Category> {
 
+    /**
+     * Default logger for {@code CategoryFactory} class.
+     */
     private static final Logger LOG = Logger.getLogger(CategoryFactory.class.getSimpleName());
 
-    public Category get(final String title) {
+    @Override
+    public final Category get(final String title) {
         if (title.equals(Antipyretics.TAG)) {
             return new Antipyretics();
         } else if (title.equals(Fruits.TAG)) {
